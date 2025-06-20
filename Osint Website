@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anti Extortion - OSINT Tools</title>
+  <style>
+    /* Reset & basics */
+    body {
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 1em;
+      background: #000;
+      color: white;
+      font-size: 1.8em;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    /* Tabs container */
+    .tabs {
+      display: flex;
+      background: #111;
+      border-bottom: 2px solid #6ab0ff;
+      user-select: none;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 1em 0;
+      cursor: pointer;
+      color: #6ab0ff;
+      font-weight: bold;
+      border-bottom: 3px solid transparent;
+      transition: border-bottom-color 0.3s ease;
+    }
+
+    .tab.active {
+      border-bottom-color: #6ab0ff;
+      color: white;
+    }
+
+    /* Content container */
+    .tab-content {
+      padding: 1.5em 2em;
+    }
+
+    /* Hide all tab contents by default */
+    .tab-content > div {
+      display: none;
+    }
+
+    /* Show active tab content */
+    .tab-content > div.active {
+      display: block;
+    }
+
+    /* Tree structure */
+    .tree {
+      padding-left: 1em;
+    }
+
+    .branch {
+      margin-left: 20px;
+      position: relative;
+    }
+
+    .branch::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: #444;
+    }
+
+    .node {
+      margin: 1em 0;
+      position: relative;
+    }
+
+    .node input[type="checkbox"] {
+      display: none;
+    }
+
+    .node label {
+      cursor: pointer;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 18px;
+      text-align: center;
+      border: 2px solid #6ab0ff;
+      border-radius: 50%;
+      font-size: 14px;
+      color: #6ab0ff;
+      user-select: none;
+      background: #000;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Change circle color if checked */
+    .node input[type="checkbox"]:checked + label {
+      background: #6ab0ff;
+      color: #000;
+    }
+
+    .node-content {
+      display: none;
+      margin-left: 2.5em;
+      margin-top: 0.5em;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .node input[type="checkbox"]:checked ~ .node-content {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Links */
+    a {
+      color: #6ab0ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: #8e88ff;
+    }
+
+    /* Lists */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 0.3em 0;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2em 1em;
+      background: #000;
+      color: #ccc;
+      font-size: 0.9em;
+      user-select: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>Anti Extortion - Open Source Intelligence</header>
+
+<!-- Tabs -->
+<div class="tabs" role="tablist" aria-label="Main Tabs">
+  <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="tools-panel" id="tools-tab">Tools</div>
+  <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="logs-panel" id="logs-tab">Logs</div>
+</div>
+
+<!-- Tab Contents -->
+<div class="tab-content">
+  <div id="tools-panel" role="tabpanel" aria-labelledby="tools-tab" class="active">
+
+    <div class="tree">
+
+      <!-- Email Section -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="email" />
+          <label for="email" title="Email">📧</label>
+          <div class="node-content">
+            <h3>Email Address</h3>
+            <ul>
+              <li><a href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Have I Been Pwned</a></li>
+              <li><a href="https://www.hudsonrock.com/threat-intelligence-cybercrime-tools" target="_blank" rel="noopener noreferrer">Hudson Rock</a></li>
+              <li><a href="https://dehashed.com/" target="_blank" rel="noopener noreferrer">Dehashed</a></li>
+              <li><a href="https://ashley.cynic.al/" target="_blank" rel="noopener noreferrer">Ashley Cynical</a></li>
+              <li><a href="https://hunter.io/" target="_blank" rel="noopener noreferrer">Hunter</a></li>
+              <li><a href="https://thatsthem.com/reverse-email-lookup" target="_blank" rel="noopener noreferrer">That's Them</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Section -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="phone" />
+          <label for="phone" title="Phone">📱</label>
+          <div class="node-content">
+            <h3>Phone Number</h3>
+            <ul>
+              <li><a href="https://whocalld.com/" target="_blank" rel="noopener noreferrer">Whocalld</a></li>
+              <li><a href="https://www.411.com/reverse-phone-lookup" target="_blank" rel="noopener noreferrer">411</a></li>
+              <li><a href="https://calleridtest.com/" target="_blank" rel="noopener noreferrer">Caller ID Test</a></li>
+              <li><a href="https://thatsthem.com/reverse-phone-lookup" target="_blank" rel="noopener noreferrer">That's Them</a></li>
+              <li><a href="https://www.twilio.com/en-us/user-authentication-identity/lookup" target="_blank" rel="noopener noreferrer">Twilio</a></li>
+              <li><a href="https://www.fonefinder.net/" target="_blank" rel="noopener noreferrer">Fone Finder</a></li>
+              <li><a href="https://www.truecaller.com/" target="_blank" rel="noopener noreferrer">Truecaller</a></li>
+              <li><a href="https://www.reversephonecheck.com/" target="_blank" rel="noopener noreferrer">ReversePhoneCheck</a></li>
+              <li><a href="https://www.spydialer.com/default.aspx" target="_blank" rel="noopener noreferrer">Spy Dialer</a></li>
+              <li><a href="https://www.phonevalidator.com/" target="_blank" rel="noopener noreferrer">Phone Validator</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- DarkWeb Section -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="darkweb" />
+          <label for="darkweb" title="Dark Web">🌐</label>
+          <div class="node-content">
+            <h3>DarkWeb</h3>
+            <ul>
+              <li><a href="https://www.reddit.com/r/deepweb" target="_blank" rel="noopener noreferrer">Reddit Deepweb</a></li>
+              <li><a href="https://www.torproject.org/download/download-easy.html.en" target="_blank" rel="noopener noreferrer">Tor Download</a></li>
+              <li><a href="https://geti2p.net/en/" target="_blank" rel="noopener noreferrer">I2P anon</a></li>
+              <li><a href="https://github.com/s-rah/onionscan" target="_blank" rel="noopener noreferrer">Onion Scan</a></li>
+              <li><a href="https://iaca-darkweb-tools.com/" target="_blank" rel="noopener noreferrer">DarkWeb investigation support</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Virtual Machines -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="vms" />
+          <label for="vms" title="VMs">💻</label>
+          <div class="node-content">
+            <h3>Virtual Machines</h3>
+            <ul>
+              <li><a href="http://www.vmware.com/products/player/playerpro-evaluation.html" target="_blank" rel="noopener noreferrer">VMware Workstation</a></li>
+              <li><a href="https://www.virtualbox.org/" target="_blank" rel="noopener noreferrer">VirtualBox</a></li>
+              <li><a href="https://inteltechniques.com/buscador/index.html" target="_blank" rel="noopener noreferrer">Buscador</a></li>
+              <li><a href="https://www.kali.org/" target="_blank" rel="noopener noreferrer">Kali Linux</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Geolocation -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="geo" />
+          <label for="geo" title="Geolocation">📍</label>
+          <div class="node-content">
+            <h3>Geolocation</h3>
+            <ul>
+              <li><a href="https://www.maxmind.com/en/home" target="_blank" rel="noopener noreferrer">Maxmind</a></li>
+              <li><a href="https://github.com/ipverse/rir-ip" target="_blank" rel="noopener noreferrer">ipverse</a></li>
+              <li><a href="https://www.ip2location.com/demo" target="_blank" rel="noopener noreferrer">Ip2location</a></li>
+              <li><a href="https://www.ipfingerprints.com/" target="_blank" rel="noopener noreferrer">ipfingerprints</a></li>
+              <li><a href="https://db-ip.com/" target="_blank" rel="noopener noreferrer">Dbip</a></li>
+              <li><a href="https://urlscan.io/search/#*" target="_blank" rel="noopener noreferrer">url scan</a></li>
+              <li><a href="https://netlas.io/" target="_blank" rel="noopener noreferrer">netlas</a></li>
+              <li><a href="https://ki.tc/" target="_blank" rel="noopener noreferrer">ki.tc</a></li>
+              <li><a href="https://iplogger.org/" target="_blank" rel="noopener noreferrer">iplogger</a></li>
+              <li><a href="https://grabify.link/" target="_blank" rel="noopener noreferrer">grabify</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Threat Intelligence -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="threat-intelligence" />
+          <label for="threat-intelligence" title="Threat Intelligence">🔫</label>
+          <div class="node-content">
+            <h3>Threat Intelligence</h3>
+            <ul>
+              <li><a href="https://i.secai.ai/research" target="_blank" rel="noopener noreferrer">Secai</a></li>
+              <li><a href="https://www.phishtank.com/" target="_blank" rel="noopener noreferrer">Phishtank</a></li>
+              <li><a href="https://www.misp-project.org/" target="_blank" rel="noopener noreferrer">Misp</a></li>
+              <li><a href="https://maltiverse.com/start" target="_blank" rel="noopener noreferrer">MaltiVerse</a></li>
+              <li><a href="https://www.projecthoneypot.org/" target="_blank" rel="noopener noreferrer">Honeypot</a></li>
+              <li><a href="https://www.scamdb.net/" target="_blank" rel="noopener noreferrer">Scam Database</a></li>
+              <li><a href="https://iocfeed.mrlooquer.com/" target="_blank" rel="noopener noreferrer">Mrlooquer</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Malicious File Analysis -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="malicious-file-analysis" />
+          <label for="malicious-file-analysis" title="Malicious File Analysis">🐀</label>
+          <div class="node-content">
+            <h3>Malicious File Analysis</h3>
+            <ul>
+              <li><a href="https://labs.inquest.net/dfi" target="_blank" rel="noopener noreferrer">Inquest</a></li>
+              <li><a href="https://id-ransomware.malwarehunterteam.com/" target="_blank" rel="noopener noreferrer">ID Ransomware</a></li>
+              <li><a href="http://www.reconstructer.org/" target="_blank" rel="noopener noreferrer">Reconstructer</a></li>
+              <li><a href="https://malwareanalysis.tools/" target="_blank" rel="noopener noreferrer">Malwareanalysis</a></li>
+              <li><a href="https://app.any.run/" target="_blank" rel="noopener noreferrer">Any Run</a></li>
+              <li><a href="https://www.joesandbox.com/#windows" target="_blank" rel="noopener noreferrer">Joesandbox</a></li>
+              <li><a href="https://www.hybrid-analysis.com/" target="_blank" rel="noopener noreferrer">Hybrid Analysis</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anti-Extortion tools -->
+      <div class="branch">
+        <div class="node">
+          <input type="checkbox" id="anti-extortion-tools" />
+          <label for="anti-extortion-tools" title="Anti-Extortion tools">💸</label>
+          <div class="node-content">
+            <h3>Anti-Extortion Tools</h3>
+            <ul>
+              <li><a href="https://www.osint.industries/" target="_blank" rel="noopener noreferrer">OSINT Industries</a></li>
+              <li><a href="https://tracked.sh/" target="_blank" rel="noopener noreferrer">Tracked.sh</a></li>
+              <li><a href="https://csint.tools/" target="_blank" rel="noopener noreferrer">CSINT Tools</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="logs-panel" role="tabpanel" aria-labelledby="logs-tab">
+    <p><em>Logs section coming soon...</em></p>
+  </div>
+</div>
+
+<footer>
+  <p>If you're being extorted, please read this:</p>
+  <p>If you’re a minor or in danger:<br />
+    <a href="https://report.cybertip.org/" target="_blank" rel="noopener noreferrer">US: report.cybertip.org</a><br />
+    <a href="https://www.ceop.police.uk/safety-centre/" target="_blank" rel="noopener noreferrer">UK: ceop.police.uk</a><br />
+    <a href="https://inhope.org/" target="_blank" rel="noopener noreferrer">EU: inhope.org</a><br />
+    <em>(Find local hotlines in your country)</em>
+  </p>
+  <p>Need to talk?<br />
+    <a href="https://www.mentalhealtheurope.eu/helplines/" target="_blank" rel="noopener noreferrer">EU Helpline</a><br />
+    <a href="sms:741741">Text HELLO to 741741</a> (US 24/7)<br />
+    <a href="tel:988">Call or text 988 (US)</a>
+  </p>
+  <p><strong>You’re not alone.</strong></p>
+  <p><strong>Message @5mpd on Discord for help</strong></p>
+</footer>
+
+<script>
+  // Tabs switching logic
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.tab-content > div');
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      // Deactivate all tabs and panels
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
+      panels.forEach(p => p.classList.remove('active'));
+
+      // Activate clicked tab and panel
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      panels[i].classList.add('active');
+      panels[i].focus();
+    });
+
+    // Keyboard navigation support
+    tab.addEventListener('keydown', (e) => {
+      let index = Array.from(tabs).indexOf(e.target);
+      if(e.key === 'ArrowRight') {
+        e.preventDefault();
+        let nextIndex = (index + 1) % tabs.length;
+        tabs[nextIndex].focus();
+      } else if(e.key === 'ArrowLeft') {
+        e.preventDefault();
+        let prevIndex = (index - 1 + tabs.length) % tabs.length;
+        tabs[prevIndex].focus();
+      } else if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        tab.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
